@@ -56,20 +56,18 @@ public class BookListFragment extends Fragment implements BookFetchListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         mBooksAdapter = new BooksAdapter(new ArrayList<Book>());
         recyclerView.setAdapter(mBooksAdapter);
+        loadBooks();
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    private void loadBooks() {
         Log.d(TAG, "loaded");
-        super.onActivityCreated(savedInstanceState);
         showProgress();
         if (getBookRegion() != null && getBookType() != null) {
             NetworkAdapter.getInstance().getBooks(getBookType(), getBookRegion(), this);
         } else {
             dismissProgress();
         }
-
     }
 
     @Override

@@ -20,6 +20,62 @@ public class Book {
     @SerializedName("im:releaseDate")
     private BookRelaseDate mBookRelaseDate;
 
+    public BookName getBookName() {
+        return mBookName;
+    }
+
+    public void setBookName(BookName bookName) {
+        mBookName = bookName;
+    }
+
+    public List<BookImage> getBookImages() {
+        return mBookImages;
+    }
+
+    public void setBookImages(List<BookImage> bookImages) {
+        mBookImages = bookImages;
+    }
+
+    public BookPrice getBookPrice() {
+        return mBookPrice;
+    }
+
+    public void setBookPrice(BookPrice bookPrice) {
+        mBookPrice = bookPrice;
+    }
+
+    public Link getLink() {
+        return mLink;
+    }
+
+    public void setLink(Link link) {
+        mLink = link;
+    }
+
+    public Author getAuthor() {
+        return mAuthor;
+    }
+
+    public void setAuthor(Author author) {
+        mAuthor = author;
+    }
+
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(Category category) {
+        mCategory = category;
+    }
+
+    public BookRelaseDate getBookRelaseDate() {
+        return mBookRelaseDate;
+    }
+
+    public void setBookRelaseDate(BookRelaseDate bookRelaseDate) {
+        mBookRelaseDate = bookRelaseDate;
+    }
+
     @Override
     public String toString() {
         return "Book{" +

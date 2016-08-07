@@ -5,6 +5,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String regionCode = regionList.get(position).getRegionCode();
+                Log.d(TAG, "Region Code : " + regionCode);
                 loadViewPagerPages(regionCode);
+
             }
 
             @Override
