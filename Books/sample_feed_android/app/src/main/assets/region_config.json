@@ -1,12 +1,12 @@
 {
   "regions": [
     {
-      "region": "India",
-      "key": "in"
-    },
-    {
       "region": "USA",
       "key": "us"
+    },
+    {
+      "region": "JAPAN",
+      "key": "jp"
     }
   ]
 }
