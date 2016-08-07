@@ -1,0 +1,16 @@
+{
+  "booktypes": [
+    {
+      "type": "Free",
+      "path": "topfreeebooks"
+    },
+    {
+      "type": "Paid",
+      "path": "toppaidebooks"
+    },
+    {
+      "type": "new",
+      "path": "toptextbooks"
+    }
+  ]
+}
