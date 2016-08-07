@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> regionCodeList = new ArrayList<>();
         for (Region region : regionList) {
-            regionCodeList.add(region.getRegionCode());
+            regionCodeList.add(region.getRegionTitle());
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, regionCodeList);
         spinner.setAdapter(adapter);
