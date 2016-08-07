@@ -26,8 +26,10 @@ public class BooksFeedConfiguration {
     }
 
     public static List<Region> getAvailableRegions(Context context) {
-        final RegionInfo regionInfo = Utils.loadJSONFromAsset(context, REGION_CONFIGURATION_FILE, RegionInfo.class);
-        final ArrayList<Region> list = new ArrayList<>();
-        return list;
+        List<Region> regions = null;
+        RegionInfo regionInfo = Utils.loadJSONFromAsset(context, REGION_CONFIGURATION_FILE, RegionInfo.class);
+        if (regionInfo != null)
+            regions = regionInfo.getRegions();
+        return regions;
     }
 }

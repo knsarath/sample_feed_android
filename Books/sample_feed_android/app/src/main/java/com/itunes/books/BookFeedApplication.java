@@ -19,14 +19,4 @@ public class BookFeedApplication extends Application {
 
     }
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
-
 }

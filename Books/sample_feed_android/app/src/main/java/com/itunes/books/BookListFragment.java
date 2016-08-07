@@ -14,7 +14,7 @@ import com.itunes.books.network.NetworkAdapter;
 
 import java.util.List;
 
-public class BookListFragment extends Fragment {
+public class BookListFragment extends Fragment implements BookFetchListener {
 
     private static final String TAG = BookListFragment.class.getSimpleName();
 
@@ -54,21 +54,32 @@ public class BookListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "loaded");
         super.onActivityCreated(savedInstanceState);
-
-
+        showProgress();
         if (getBookRegion() != null && getBookType() != null) {
-            NetworkAdapter.getInstance().getBooks(getBookType(), getBookRegion(), new BookFetchListener() {
-                @Override
-                public void onBooksFetched(List<Book> books) {
-
-                }
-
-                @Override
-                public void onBooksFetchFailed(String message) {
-
-                }
-            });
+            NetworkAdapter.getInstance().getBooks(getBookType(), getBookRegion(), this);
         }
 
+    }
+
+    @Override
+    public void onBooksFetched(List<Book> books) {
+        dismissProgress();
+    }
+
+    @Override
+    public void onBooksFetchFailed(String message) {
+        dismissProgress();
+    }
+
+    private void showProgress() {
+        if (getView() != null) {
+            getView().findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void dismissProgress() {
+        if (getView() != null) {
+            getView().findViewById(R.id.progressBar).setVisibility(View.GONE);
+        }
     }
 }
