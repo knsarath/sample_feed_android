@@ -36,26 +36,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        loadViewPagerPages();
     }
 
-    private void loadViewPagerPages(String regionCode) {
+    private void loadViewPagerPages() {
         List<BookType> bookTypes = BooksFeedConfiguration.getAvailableBookTypes(this);
         if (bookTypes != null) {
             int numberOfBooktypes = bookTypes.size();
             BookListFragment[] bookListFragments = new BookListFragment[numberOfBooktypes];
             for (int i = 0; i < numberOfBooktypes; i++) {
                 BookType bookType = bookTypes.get(i);
-                BookListFragment bookListFragment = BookListFragment.createInstance(bookType.getTypeTitle(), bookType.getUrlPath(), regionCode);
+                BookListFragment bookListFragment = BookListFragment.createInstance(bookType.getTypeTitle(), bookType.getUrlPath());
                 bookListFragments[i] = bookListFragment;
             }
             mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), bookListFragments);
+            mViewPager.setOffscreenPageLimit(3);
             mViewPager.setAdapter(mViewPagerAdapter);
             mTabLayout.setupWithViewPager(mViewPager);
         }
     }
 
-    public void setRegionChangeListeners(ArrayList<RegionChangeListener> regionChangeListeners) {
-        mRegionChangeListeners = regionChangeListeners;
+    public void addRegionChangeListeners(RegionChangeListener regionChangeListener) {
+        if (regionChangeListener != null)
+            mRegionChangeListeners.add(regionChangeListener);
     }
 
     @Override

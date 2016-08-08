@@ -1,5 +1,6 @@
 package com.itunes.books;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,12 +26,11 @@ public class BookListFragment extends Fragment implements BookFetchListener, Reg
     private static final String TAG = BookListFragment.class.getSimpleName();
     private BooksAdapter mBooksAdapter;
 
-    public static BookListFragment createInstance(String title, String bookType, String region) {
+    public static BookListFragment createInstance(String title, String bookType) {
         BookListFragment bookListFragment = new BookListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TITLE, title);
         bundle.putString(Constants.BOOK_TYPE, bookType);
-        bundle.putString(Constants.REGION, region);
         bookListFragment.setArguments(bundle);
         return bookListFragment;
     }
@@ -41,14 +41,6 @@ public class BookListFragment extends Fragment implements BookFetchListener, Reg
         Log.d(TAG, "Category :" + category);
         return category;
     }
-
-    private String getBookRegion() {
-        String region = null;
-        region = getArguments().getString(Constants.REGION);
-        Log.d(TAG, "Category :" + region);
-        return region;
-    }
-
 
     @Nullable
     @Override
@@ -61,10 +53,24 @@ public class BookListFragment extends Fragment implements BookFetchListener, Reg
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity) {
+            MainActivity activity = (MainActivity) context;
+            activity.addRegionChangeListeners(this);
+        }
+    }
+
+    @Override
+    public void onRegionChanged(String regionCode) {
+        loadBooks(regionCode);
+    }
+
     private void loadBooks(String regionCode) {
         Log.d(TAG, "loaded");
         showProgress();
-        if (getBookRegion() != null && getBookType() != null) {
+        if (regionCode != null && getBookType() != null) {
             NetworkAdapter.getInstance().getBooks(getBookType(), regionCode, this);
         } else {
             dismissProgress();
@@ -96,8 +102,5 @@ public class BookListFragment extends Fragment implements BookFetchListener, Reg
         }
     }
 
-    @Override
-    public void onRegionChanged(String regionCode) {
-        loadBooks(regionCode);
-    }
+
 }
