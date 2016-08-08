@@ -13,13 +13,14 @@ import android.view.ViewGroup;
 import com.itunes.books.adapter.BooksAdapter;
 import com.itunes.books.constants.Constants;
 import com.itunes.books.intf.BookFetchListener;
+import com.itunes.books.intf.RegionChangeListener;
 import com.itunes.books.model.apimodel.Book;
 import com.itunes.books.network.NetworkAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookListFragment extends Fragment implements BookFetchListener {
+public class BookListFragment extends Fragment implements BookFetchListener, RegionChangeListener {
 
     private static final String TAG = BookListFragment.class.getSimpleName();
     private BooksAdapter mBooksAdapter;
@@ -57,15 +58,14 @@ public class BookListFragment extends Fragment implements BookFetchListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         mBooksAdapter = new BooksAdapter(new ArrayList<Book>());
         recyclerView.setAdapter(mBooksAdapter);
-        loadBooks();
         return view;
     }
 
-    private void loadBooks() {
+    private void loadBooks(String regionCode) {
         Log.d(TAG, "loaded");
         showProgress();
         if (getBookRegion() != null && getBookType() != null) {
-            NetworkAdapter.getInstance().getBooks(getBookType(), getBookRegion(), this);
+            NetworkAdapter.getInstance().getBooks(getBookType(), regionCode, this);
         } else {
             dismissProgress();
         }
@@ -94,5 +94,10 @@ public class BookListFragment extends Fragment implements BookFetchListener {
         if (getView() != null) {
             getView().findViewById(R.id.progressBar).setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onRegionChanged(String regionCode) {
+        loadBooks(regionCode);
     }
 }

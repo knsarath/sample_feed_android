@@ -1,10 +1,10 @@
 package com.itunes.books;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,8 +15,9 @@ import android.widget.Spinner;
 
 import com.itunes.books.adapter.ViewPagerAdapter;
 import com.itunes.books.config.BooksFeedConfiguration;
-import com.itunes.books.model.apimodel.BookType;
+import com.itunes.books.intf.RegionChangeListener;
 import com.itunes.books.model.Region;
+import com.itunes.books.model.apimodel.BookType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +25,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
     private ViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private TabLayout mTabLayout;
+    private ArrayList<RegionChangeListener> mRegionChangeListeners = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void setRegionChangeListeners(ArrayList<RegionChangeListener> regionChangeListeners) {
+        mRegionChangeListeners = regionChangeListeners;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
