@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         final Region selectedRegion = (Region) parent.getAdapter().getItem(position);
         for (RegionChangeListener regionChangeListener : REGION_CHANGE_LISTENERS) {
-            regionChangeListener.onRegionChanged(selectedRegion.getRegionCode());
+            if (regionChangeListener != null)
+                regionChangeListener.onRegionChanged(selectedRegion.getRegionCode());
         }
     }
 
@@ -86,6 +87,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (regionChangeListener != null) {
             REGION_CHANGE_LISTENERS.add(regionChangeListener);
         }
-
     }
 }

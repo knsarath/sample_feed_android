@@ -88,11 +88,11 @@ public class BookListFragment extends Fragment implements BookFetchListener, Reg
     }
 
     @Override
-    public void onBooksFetchFailed(String message) {
+    public void onBooksFetchFailed(String errorMessage) {
         dismissProgress();
         if (getContext() != null) {
-            message = (message == null || message.isEmpty()) ? getString(R.string.something_went_wrong) : message;
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            errorMessage = (errorMessage == null || errorMessage.isEmpty()) ? getString(R.string.something_went_wrong) : errorMessage;
+            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
         }
     }
 
