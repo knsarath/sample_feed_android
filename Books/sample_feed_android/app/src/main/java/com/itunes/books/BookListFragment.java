@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.itunes.books.adapter.BooksAdapter;
 import com.itunes.books.constants.Constants;
@@ -30,8 +31,8 @@ public class BookListFragment extends Fragment implements BookFetchListener, Reg
     public static BookListFragment createInstance(String title, String bookType) {
         BookListFragment bookListFragment = new BookListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.TITLE, title);
-        bundle.putString(Constants.BOOK_TYPE, bookType);
+        bundle.putString(Constants.TITLE, title); // title for the tab
+        bundle.putString(Constants.BOOK_TYPE, bookType); // type of book which this fragment instance represents
         bookListFragment.setArguments(bundle);
         return bookListFragment;
     }
@@ -89,6 +90,10 @@ public class BookListFragment extends Fragment implements BookFetchListener, Reg
     @Override
     public void onBooksFetchFailed(String message) {
         dismissProgress();
+        if (getContext() != null) {
+            message = (message == null || message.isEmpty()) ? getString(R.string.something_went_wrong) : message;
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showProgress() {

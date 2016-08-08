@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private TabLayout mTabLayout;
-    private ArrayList<RegionChangeListener> mRegionChangeListeners = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +72,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         final Region selectedRegion = (Region) parent.getAdapter().getItem(position);
-        if (mRegionChangeListeners != null) {
-            for (RegionChangeListener regionChangeListener : mRegionChangeListeners) {
-                regionChangeListener.onRegionChanged(selectedRegion.getRegionCode());
-            }
+        for (RegionChangeListener regionChangeListener : REGION_CHANGE_LISTENERS) {
+            regionChangeListener.onRegionChanged(selectedRegion.getRegionCode());
         }
     }
 
@@ -87,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void addOnRegionChangeListener(RegionChangeListener regionChangeListener) {
-        if (regionChangeListener != null)
-            mRegionChangeListeners.add(regionChangeListener);
+        if (regionChangeListener != null) {
+            REGION_CHANGE_LISTENERS.add(regionChangeListener);
+        }
+
     }
 }

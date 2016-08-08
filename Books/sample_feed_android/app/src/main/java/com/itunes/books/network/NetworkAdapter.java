@@ -31,8 +31,12 @@ public class NetworkAdapter {
         call.enqueue(new Callback<BooksFeed>() {
             @Override
             public void onResponse(Call<BooksFeed> call, Response<BooksFeed> response) {
-                Log.d(TAG, response.body().toString());
-                callback.onBooksFetched(response.body().getFeed().getBooks());
+                if (response != null && response.body() != null && response.body().getFeed() != null && response.body().getFeed().getBooks() != null) {
+                    Log.d(TAG, response.body().toString());
+                    callback.onBooksFetched(response.body().getFeed().getBooks());
+                } else {
+                    callback.onBooksFetchFailed("");
+                }
             }
 
             @Override
