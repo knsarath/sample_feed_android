@@ -76,8 +76,11 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String regionCode = regionList.get(position).getRegionCode();
                 Log.d(TAG, "Region Code : " + regionCode);
-                loadViewPagerPages(regionCode);
-
+                if (mRegionChangeListeners != null) {
+                    for (RegionChangeListener regionChangeListener : mRegionChangeListeners) {
+                        regionChangeListener.onRegionChanged(regionCode);
+                    }
+                }
             }
 
             @Override
