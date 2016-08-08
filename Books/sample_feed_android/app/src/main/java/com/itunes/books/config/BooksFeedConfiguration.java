@@ -2,14 +2,12 @@ package com.itunes.books.config;
 
 import android.content.Context;
 
-import com.itunes.books.MainActivity;
-import com.itunes.books.Region;
+import com.itunes.books.model.Region;
 import com.itunes.books.Utils;
 import com.itunes.books.model.BookTypeInfo;
 import com.itunes.books.model.RegionInfo;
 import com.itunes.books.model.apimodel.BookType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BooksFeedConfiguration {

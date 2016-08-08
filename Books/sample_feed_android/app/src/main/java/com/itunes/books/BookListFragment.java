@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.itunes.books.adapter.BooksAdapter;
+import com.itunes.books.constants.Constants;
 import com.itunes.books.intf.BookFetchListener;
 import com.itunes.books.model.apimodel.Book;
 import com.itunes.books.network.NetworkAdapter;

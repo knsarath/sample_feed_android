@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.itunes.books.Region;
+import com.itunes.books.model.Region;
 
 import java.util.ArrayList;
 import java.util.List;

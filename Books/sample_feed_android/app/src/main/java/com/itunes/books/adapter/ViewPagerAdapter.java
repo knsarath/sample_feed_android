@@ -1,10 +1,12 @@
-package com.itunes.books;
+package com.itunes.books.adapter;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.itunes.books.constants.Constants;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Fragment[] mFragments;

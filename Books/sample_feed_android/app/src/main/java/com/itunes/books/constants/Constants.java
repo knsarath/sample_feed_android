@@ -1,4 +1,4 @@
-package com.itunes.books;
+package com.itunes.books.constants;
 
 public class Constants {
 

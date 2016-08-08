@@ -13,8 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.itunes.books.adapter.ViewPagerAdapter;
 import com.itunes.books.config.BooksFeedConfiguration;
 import com.itunes.books.model.apimodel.BookType;
+import com.itunes.books.model.Region;
 
 import java.util.ArrayList;
 import java.util.List;
