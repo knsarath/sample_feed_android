@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int VIEWPAGER_OFF_SCREEN_LIMIT = 2;
     private ViewPager mViewPager;
-    private ViewPagerAdapter mViewPagerAdapter;
     private TabLayout mTabLayout;
 
     @Override
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setOffscreenPageLimit(VIEWPAGER_OFF_SCREEN_LIMIT);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         loadViewPagerPages();
     }
@@ -49,9 +49,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 BookListFragment bookListFragment = BookListFragment.createInstance(bookType.getTypeTitle(), bookType.getUrlPath());
                 bookListFragments[i] = bookListFragment;
             }
-            mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), bookListFragments);
-            mViewPager.setOffscreenPageLimit(VIEWPAGER_OFF_SCREEN_LIMIT);
-            mViewPager.setAdapter(mViewPagerAdapter);
+            ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), bookListFragments);
+            mViewPager.setAdapter(viewPagerAdapter);
             mTabLayout.setupWithViewPager(mViewPager);
         }
     }
