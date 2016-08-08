@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> {
+    private static final int LARGE_IMAGE = 2;
     private List<Book> mBooks = new ArrayList<>();
 
     public BooksAdapter(ArrayList<Book> books) {
@@ -38,11 +39,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
         holder.mCategory.setText(book.getCategory().getCategoryInfo().getName());
         holder.mReleasedOn.setText(book.getBookRelaseDate().getDate().toString());
         BookPriceInfo bookPriceInfo = book.getBookPrice().getBookPriceInfo();
-        holder.mPrice.setText(bookPriceInfo.getAmount() + " " + bookPriceInfo.getCurrency());
+        final String amountText = bookPriceInfo.getAmount() + " " + bookPriceInfo.getCurrency();
+        holder.mPrice.setText(amountText);
 
         List<BookImage> bookImages = book.getBookImages();
         if (bookImages != null && bookImages.size() > 1) {
-            String bookImageUrl = bookImages.get(2).getBookImageUrl();
+            String bookImageUrl = bookImages.get(LARGE_IMAGE).getBookImageUrl();
             Picasso.with(holder.itemView.getContext()).load(bookImageUrl).into(holder.mLogo);
         }
     }
