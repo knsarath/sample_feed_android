@@ -36,6 +36,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Book book = mBooks.get(position);
         holder.mName.setText(book.getBookName().getName());
+        holder.mAuthor.setText(book.getAuthor().getName());
         holder.mCategory.setText(book.getCategory().getCategoryInfo().getName());
         holder.mReleasedOn.setText(book.getBookRelaseDate().getDate().toString());
         BookPriceInfo bookPriceInfo = book.getBookPrice().getBookPriceInfo();
