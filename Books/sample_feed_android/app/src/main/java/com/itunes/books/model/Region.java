@@ -23,4 +23,9 @@ public class Region {
     public void setRegionCode(String regionCode) {
         mRegionCode = regionCode;
     }
+
+    @Override
+    public String toString() {
+        return mRegionTitle;
+    }
 }

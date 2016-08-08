@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,7 @@ import com.itunes.books.model.apimodel.BookType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ViewPager mViewPager;
@@ -67,30 +66,24 @@ public class MainActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.spinner);
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
         final List<Region> regionList = BooksFeedConfiguration.getAvailableRegions(this);
-
-        ArrayList<String> regionCodeList = new ArrayList<>();
-        for (Region region : regionList) {
-            regionCodeList.add(region.getRegionTitle());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item, regionCodeList);
+        ArrayAdapter<Region> adapter = new ArrayAdapter<>(this, R.layout.simple_spinner_item, regionList);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String regionCode = regionList.get(position).getRegionCode();
-                Log.d(TAG, "Region Code : " + regionCode);
-                if (mRegionChangeListeners != null) {
-                    for (RegionChangeListener regionChangeListener : mRegionChangeListeners) {
-                        regionChangeListener.onRegionChanged(regionCode);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        }); //
+        spinner.setOnItemSelectedListener(this);
         return true;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        final Region selectedRegion  = (Region) parent.getAdapter().getItem(position);
+        if (mRegionChangeListeners != null) {
+            for (RegionChangeListener regionChangeListener : mRegionChangeListeners) {
+                regionChangeListener.onRegionChanged(selectedRegion.getRegionCode());
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
