@@ -15,6 +15,7 @@ import com.itunes.books.adapter.BooksAdapter;
 import com.itunes.books.constants.Constants;
 import com.itunes.books.intf.BookFetchListener;
 import com.itunes.books.intf.RegionChangeListener;
+import com.itunes.books.intf.RegionChanger;
 import com.itunes.books.model.apimodel.Book;
 import com.itunes.books.network.NetworkAdapter;
 
@@ -56,9 +57,9 @@ public class BookListFragment extends Fragment implements BookFetchListener, Reg
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof MainActivity) {
-            MainActivity activity = (MainActivity) context;
-            activity.addRegionChangeListeners(this);
+        if (context instanceof RegionChanger) {
+            RegionChanger regionChanger = (RegionChanger) context;
+            regionChanger.addOnRegionChangeListener(this);
         }
     }
 

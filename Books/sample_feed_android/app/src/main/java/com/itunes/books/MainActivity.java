@@ -15,15 +15,17 @@ import android.widget.Spinner;
 import com.itunes.books.adapter.ViewPagerAdapter;
 import com.itunes.books.config.BooksFeedConfiguration;
 import com.itunes.books.intf.RegionChangeListener;
+import com.itunes.books.intf.RegionChanger;
 import com.itunes.books.model.Region;
 import com.itunes.books.model.apimodel.BookType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, RegionChanger {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int VIEWPAGER_OFF_SCREEN_LIMIT = 2;
     private ViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private TabLayout mTabLayout;
@@ -41,24 +43,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void loadViewPagerPages() {
         List<BookType> bookTypes = BooksFeedConfiguration.getAvailableBookTypes(this);
         if (bookTypes != null) {
-            int numberOfBooktypes = bookTypes.size();
-            BookListFragment[] bookListFragments = new BookListFragment[numberOfBooktypes];
-            for (int i = 0; i < numberOfBooktypes; i++) {
+            int numberOfBookTypes = bookTypes.size();
+            BookListFragment[] bookListFragments = new BookListFragment[numberOfBookTypes];
+            for (int i = 0; i < numberOfBookTypes; i++) {
                 BookType bookType = bookTypes.get(i);
                 BookListFragment bookListFragment = BookListFragment.createInstance(bookType.getTypeTitle(), bookType.getUrlPath());
                 bookListFragments[i] = bookListFragment;
             }
             mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), bookListFragments);
-            mViewPager.setOffscreenPageLimit(3);
+            mViewPager.setOffscreenPageLimit(VIEWPAGER_OFF_SCREEN_LIMIT);
             mViewPager.setAdapter(mViewPagerAdapter);
             mTabLayout.setupWithViewPager(mViewPager);
         }
     }
 
-    public void addRegionChangeListeners(RegionChangeListener regionChangeListener) {
-        if (regionChangeListener != null)
-            mRegionChangeListeners.add(regionChangeListener);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        final Region selectedRegion  = (Region) parent.getAdapter().getItem(position);
+        final Region selectedRegion = (Region) parent.getAdapter().getItem(position);
         if (mRegionChangeListeners != null) {
             for (RegionChangeListener regionChangeListener : mRegionChangeListeners) {
                 regionChangeListener.onRegionChanged(selectedRegion.getRegionCode());
@@ -85,5 +83,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void addOnRegionChangeListener(RegionChangeListener regionChangeListener) {
+        if (regionChangeListener != null)
+            mRegionChangeListeners.add(regionChangeListener);
     }
 }

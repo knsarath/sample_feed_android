@@ -14,7 +14,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public ViewPagerAdapter(FragmentManager fm, Fragment... fragments) {
         super(fm);
         mFragments = fragments;
-
     }
 
     @Override
