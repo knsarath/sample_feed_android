@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         for (Region region : regionList) {
             regionCodeList.add(region.getRegionTitle());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, regionCodeList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_item, regionCodeList);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
